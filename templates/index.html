@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExpertEat - Recomandare Restaurante</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>ExpertEat</h1>
+    
+    <form id="restaurantForm">
+        <label for="type">Tip de mâncare:</label>
+        <input type="text" id="type" name="type">
+
+        <label for="budget">Buget:</label>
+        <select id="budget" name="budget">
+            <option value="low">Mic</option>
+            <option value="medium">Mediu</option>
+            <option value="high">Mare</option>
+        </select>
+
+        <label for="location">Locație:</label>
+        <input type="text" id="location" name="location">
+
+        <button type="submit">Recomandă</button>
+    </form>
+
+    <div id="results"></div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

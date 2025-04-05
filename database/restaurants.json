@@ -1,0 +1,110 @@
+[
+    {
+        "name":"Casa Bunicii",
+        "type":"romanian",
+        "budget":"medium",
+        "location":"Liviu Rebreanu",
+        "images":"casa_bunicii.jpeg"
+    },
+    {
+        "name":"Riyo Wok & Sushi",
+        "type":"japanese",
+        "budget":"high",
+        "location":"Piata Unirii",
+        "images":"riyo.jpg"
+
+    },
+    {
+        "name":"Hype Culture",
+        "type":"modern",
+        "budget":"high",
+        "location":"Piata Unirii",
+        "images":"hype_culture.jpg"
+    },
+    {
+        "name":"Pinocchio",
+        "type":"modern",
+        "budget":"medium",
+        "location":"Piata Unirii",
+        "images":"pinocchio.jpg"
+    },
+    {
+        "name":"Riba",
+        "type":"modern",
+        "budget":"high",
+        "location":"Dumbravita",
+        "images":"Riba.jpg"
+    },
+    {
+        "name":"Noodle Pack",
+        "type":"chinese",
+        "budget":"medium",
+        "location":"Iullius Mall",
+        "images":"Noodle_pack.jpg"
+    },
+    {
+        "name":"McDonald's",
+        "type":"Fast-food",
+        "budget":"low",
+        "location":["central","Iullius Mall", "Calea Circumvalatiunii", "Spitalul Judetean","Dumbravita"],
+        "images":["mc_central.jpg","mc_iullius.jpg","mc_circumvalatiunii.jpg","mc_judetean.jpg","mc_dumbravita.jpg"]
+    },
+    {
+        "name":"KFC",
+        "type":"Fast-food",
+        "budget":"low",
+        "location":["central","Iullius Mall"],
+        "images":["KFC_central.jpg","KFC_iullius.jpg"]
+    },
+    {
+        "name":"Mado",
+        "type":"Fast-food",
+        "budget":"medium",
+        "location":"Iullius Mall",
+        "images":"mado.jpg"
+    },
+    {
+        "name":"Spartan",
+        "type":"Fast-food",
+        "budget":"medium",
+        "location":["central", "Iullius Mall","Galeria"],
+        "images":["spartan_central.jpeg","spartan_iullius.jpg","spartan_galeria.jpg"]
+    },
+    {
+        "name":"Taverna Racilor",
+        "type":"Sea-food",
+        "budget":"high",
+        "location":"Iullius Mall",
+        "images":"taverna_racilor.jpg"
+    },
+    {
+        "name":"Burger King",
+        "type":"Fast-food",
+        "budget":"medium",
+        "location":"Iullius Mall",
+        "images":"burger_king.jpg"
+    },
+    {
+        "name":"Marele Restaurant Chinezesc",
+        "type":"chinese",
+        "budget":"medium",
+        "location":"Complexul Studentesc",
+        "images":"marele_restaurant_chinezesc.jpg"
+    },
+    {
+        "name":"Like Pub",
+        "type":"Pub",
+        "budget":"medium",
+        "location":"Complexul Studentesc",
+        "images":"like_pub.jpg"
+    },
+    {
+        "name":"Pizza Hut",
+        "type":"Pizzerie",
+        "budget":"medium",
+        "location":"Iullius Mall",
+        "images":"pizza_hut.jpg"
+    }
+
+
+]

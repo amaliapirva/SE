@@ -27,14 +27,13 @@ document.getElementById("restaurantForm").addEventListener("submit", function(ev
                 const restaurant = item.restaurant;
                 const score = item.score;
 
-                // Opțional: culoare în funcție de scor
+                // culoare în funcție de scor
                 let color = score === 2 ? "green" : (score === 1 ? "orange" : "gray");
 
-                // 🔥 Logică pentru imagine:
+                // Logică pentru imagine:
                 let imageUrl = "";
 
                 if (Array.isArray(restaurant.images)) {
-                    // Dacă restaurantul are mai multe imagini, alegem imaginea corespunzătoare locației
                     const locationIndex = Array.isArray(restaurant.location)
                         ? restaurant.location.findIndex(loc => loc.toLowerCase() === formData.location.toLowerCase())
                         : -1;
@@ -42,17 +41,24 @@ document.getElementById("restaurantForm").addEventListener("submit", function(ev
                     if (locationIndex !== -1) {
                         imageUrl = `/static/images/${restaurant.images[locationIndex]}`;
                     } else {
-                        imageUrl = `/static/images/${restaurant.images[0]}`; // fallback, prima imagine
+                        imageUrl = `/static/images/${restaurant.images[0]}`; // fallback
                     }
                 } else if (restaurant.images) {
-                    // Dacă restaurantul are o singură imagine
                     imageUrl = `/static/images/${restaurant.images}`;
                 }
+            
+
+                // Adăugăm link pe numele restaurantului și pe imagine
+                let restaurantLink = restaurant.url || "#";
 
                 list += `<li style="color:${color};">
-                    <strong>${restaurant.name}</strong> - ${restaurant.type} (${restaurant.budget}, ${restaurant.location})<br>
+                    <a href="${restaurantLink}" target="_blank" style="text-decoration: none; color: inherit;">
+                        <strong>${restaurant.name}</strong>
+                    </a> - ${restaurant.type} (${restaurant.budget}, ${restaurant.location})<br>
                     <small>Potrivire: ${score} ${score === 1 ? "criteriu" : "criterii"}</small><br>
-                    ${imageUrl ? `<img src="${imageUrl}" alt="${restaurant.name}" style="width:200px; border-radius:8px; margin-top:10px;">` : ""}
+                    ${imageUrl ? `<a href="${restaurantLink}" target="_blank">
+                                    <img src="${imageUrl}" alt="${restaurant.name}" style="width:200px; border-radius:8px; margin-top:10px;">
+                                  </a>` : ""}
                 </li>`;
             });
             list += "</ul>";

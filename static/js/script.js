@@ -22,47 +22,50 @@ document.getElementById("restaurantForm").addEventListener("submit", function(ev
         if (data.length === 0) {
             resultsDiv.innerHTML += "<p>Niciun restaurant nu a fost găsit.</p>";
         } else {
-            let list = "<ul>";
+            let cards = "";
+
             data.forEach(item => {
                 const restaurant = item.restaurant;
                 const score = item.score;
 
-                // culoare în funcție de scor
-                let color = score === 2 ? "green" : (score === 1 ? "orange" : "gray");
-
-                // Logică pentru imagine:
-                let imageUrl = "";
-
-                if (Array.isArray(restaurant.images)) {
-                    const locationIndex = Array.isArray(restaurant.location)
-                        ? restaurant.location.findIndex(loc => loc.toLowerCase() === formData.location.toLowerCase())
-                        : -1;
-
-                    if (locationIndex !== -1) {
-                        imageUrl = `/static/images/${restaurant.images[locationIndex]}`;
-                    } else {
-                        imageUrl = `/static/images/${restaurant.images[0]}`; // fallback
-                    }
+                // Pregătim lista de imagini din string
+                let imagesList = [];
+                if (restaurant.images && restaurant.images.includes(",")) {
+                    imagesList = restaurant.images.split(",").map(img => img.trim());
                 } else if (restaurant.images) {
-                    imageUrl = `/static/images/${restaurant.images}`;
+                    imagesList = [restaurant.images];
                 }
-            
 
-                // Adăugăm link pe numele restaurantului și pe imagine
-                let restaurantLink = restaurant.url || "#";
+                // Aflăm imaginea potrivită pentru locație
+                let imageUrl = "";
+                if (imagesList.length > 0) {
+                    let locationList = [];
+                    if (restaurant.location && restaurant.location.includes(",")) {
+                        locationList = restaurant.location.split(",").map(loc => loc.trim().toLowerCase());
+                    } else {
+                        locationList = [restaurant.location.toLowerCase()];
+                    }
 
-                list += `<li style="color:${color};">
-                    <a href="${restaurantLink}" target="_blank" style="text-decoration: none; color: inherit;">
-                        <strong>${restaurant.name}</strong>
-                    </a> - ${restaurant.type} (${restaurant.budget}, ${restaurant.location})<br>
-                    <small>Potrivire: ${score} ${score === 1 ? "criteriu" : "criterii"}</small><br>
-                    ${imageUrl ? `<a href="${restaurantLink}" target="_blank">
-                                    <img src="${imageUrl}" alt="${restaurant.name}" style="width:200px; border-radius:8px; margin-top:10px;">
-                                  </a>` : ""}
-                </li>`;
+                    const index = locationList.findIndex(loc => loc === formData.location.toLowerCase());
+                    imageUrl = index !== -1 && index < imagesList.length
+                        ? `/static/images/${imagesList[index]}`
+                        : `/static/images/${imagesList[0]}`;
+                }
+
+                const restaurantLink = restaurant.url || "#";
+
+                cards += `
+                <div class="card">
+                    <a href="${restaurantLink}" target="_blank">
+                        <img src="${imageUrl}" alt="${restaurant.name}">
+                    </a>
+                    <h3><a href="${restaurantLink}" target="_blank">${restaurant.name}</a></h3>
+                    <p>${restaurant.type} • ${restaurant.budget} • ${restaurant.location}</p>
+                    <small>Potrivire: ${score} ${score === 1 ? "criteriu" : "criterii"}</small>
+                </div>`;
             });
-            list += "</ul>";
-            resultsDiv.innerHTML += list;
+
+            resultsDiv.innerHTML += cards;
         }
     })
     .catch(error => console.error("Eroare:", error));

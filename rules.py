@@ -1,47 +1,51 @@
-import json
+import sqlite3
 import os
 
-def load_data():
-    """Încarcă datele despre restaurante din fișierul JSON."""
-    path = os.path.join(os.path.dirname(__file__), "database/restaurants.json")
-    with open(path, "r") as file:
-        return json.load(file)
+def get_connection():
+    db_path = os.path.join(os.path.dirname(__file__), "database/restaurants.db")
+    return sqlite3.connect(db_path)
 
 def filter_restaurants(user_preferences):
-    """Filtrează restaurantele pe baza preferințelor utilizatorului."""
-    restaurants = load_data()
+    """Filtrează restaurantele pe baza preferințelor utilizatorului folosind SQLite."""
+    user_type = user_preferences.get("type", "").lower()
+    user_budget = user_preferences.get("budget", "").lower()
+    user_location = user_preferences.get("location", "").lower()
 
-    user_type = user_preferences.get("type")
-    user_budget = user_preferences.get("budget")
-    user_location = user_preferences.get("location")
+    conn = get_connection()
+    cursor = conn.cursor()
 
-    # Pas 1: filtrăm după tipul de mâncare
-    if user_type:
-        filtered = [r for r in restaurants if r["type"].lower() == user_type.lower()]
-    else:
-        filtered = restaurants  # Dacă nu e specificat tipul, le luăm pe toate
+    # Selectăm toate restaurantele și le procesăm manual pentru scoruri
+    cursor.execute("SELECT name, type, budget, location, images, url FROM restaurants")
+    rows = cursor.fetchall()
+    conn.close()
 
-    # Pas 2: scorăm după buget și locație
-    scored = []
-    for r in filtered:
+    results = []
+
+    for row in rows:
+        name, type_, budget, location, images, url = row
         score = 0
-        if user_budget and r["budget"].lower() == user_budget.lower():
+
+        if user_type and type_.lower() == user_type:
+            score += 1
+        if user_budget and budget.lower() == user_budget:
             score += 1
         if user_location:
-    # Verificăm dacă user_location este în lista de locații ale restaurantului
-            if isinstance(r["location"], list):
-                if user_location.lower() in [loc.lower() for loc in r["location"]]:
-                    score += 1
-            else:
-        # Pentru restaurantele care au o singură locație (string simplu)
-                if r["location"].lower() == user_location.lower():
-                    score += 1
+            loc_list = [l.strip().lower() for l in location.split(",")]
+            if user_location in loc_list:
+                score += 1
 
-        scored.append((score, r))
+        if user_type == "" or type_.lower() == user_type:
+            results.append((
+                score,
+                {
+                    "name": name,
+                    "type": type_,
+                    "budget": budget,
+                    "location": location,
+                    "images": images,
+                    "url": url
+                }
+            ))
 
-    # Sortăm descrescător după scor
-    scored.sort(reverse=True, key=lambda x: x[0])
-
-    # Returnăm doar restaurantele 
-    return [{"restaurant": r[1], "score": r[0]} for r in scored]
-
+    results.sort(reverse=True, key=lambda x: x[0])
+    return [{"restaurant": r[1], "score": r[0]} for r in results]

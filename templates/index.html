@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ExpertEat - Recomandare Restaurante</title>
+
+    <!-- Font modern Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Stiluri personalizate -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
@@ -11,17 +16,39 @@
     
     <form id="restaurantForm">
         <label for="type">Tip de mâncare:</label>
-        <input type="text" id="type" name="type">
+        <select id="type" name="type">
+            <option value="">Selectează tipul</option>
+            <option value="Fast-food">Fast-food</option>
+            <option value="chinese">Chinezesc</option>
+            <option value="romanian">Românesc</option>
+            <option value="modern">Modern</option>
+            <option value="Pizzerie">Pizzerie</option>
+            <option value="sushi">Sushi</option>
+            <option value="Sea-food">Sea-food</option>
+            <option value="Pub">Pub</option>
+        </select>
 
         <label for="budget">Buget:</label>
         <select id="budget" name="budget">
+            <option value="">Selectează bugetul</option>
             <option value="low">Mic</option>
             <option value="medium">Mediu</option>
             <option value="high">Mare</option>
         </select>
 
         <label for="location">Locație:</label>
-        <input type="text" id="location" name="location">
+        <select id="location" name="location">
+            <option value="">Selectează locația</option>
+            <option value="central">Central</option>
+            <option value="Piata Unirii">Piața Unirii</option>
+            <option value="Iullius Mall">Iullius Mall</option>
+            <option value="Dumbravita">Dumbrăvița</option>
+            <option value="Complexul Studentesc">Complexul Studențesc</option>
+            <option value="Liviu Rebreanu">Liviu Rebreanu</option>
+            <option value="Calea Circumvalatiunii">Calea Circumvalațiunii</option>
+            <option value="Spitalul Judetean">Spitalul Județean</option>
+            <option value="Galeria">Galeria</option>
+        </select>
 
         <button type="submit">Recomandă</button>
     </form>
